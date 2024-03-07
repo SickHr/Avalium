@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     box-sizing: border-box;
@@ -6,40 +8,66 @@
     padding: 0;
 }
 
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+body {
+    font-family: 'Press Start 2P', cursive;
     background-color: #222;
-    z-index: -1;
+    color: #c4f2c5;
 }
 
 .container {
-    max-width: 960px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(119, 221, 119, 0.5);
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 nav ul {
     display: flex;
     list-style: none;
+    position: relative;
 }
 
 nav a {
-    color: #00ff00;
+    color: #c4f2c5;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 30px;
+    padding: 10px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #c4f2c5;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.active::after {
+    transform: scaleX(1);
+}
+
+nav a:hover {
+    color: #a9e0a9;
+}
+
+nav a.active {
+    color: #a9e0a9;
 }
 
 .hero {
@@ -47,6 +75,7 @@ nav a {
     padding: 100px 0;
     position: relative;
     overflow: hidden;
+    margin-bottom: 60px;
 }
 
 .particle-effect {
@@ -55,7 +84,7 @@ nav a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(rgba(0, 255, 0, 0.1) 20%, transparent 0);
+    background-image: radial-gradient(rgba(196, 242, 197, 0.1) 20%, transparent 0);
     background-size: 20px 20px;
     animation: particle-effect 5s linear infinite;
 }
@@ -73,19 +102,116 @@ nav a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    padding: 40px;
+    background-color: #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(170, 238, 170, 0.3);
 }
 
 .content {
     flex-basis: 60%;
 }
 
-.retro-image {
+.retro-icon {
     flex-basis: 35%;
     height: 300px;
-    background-color: #00ff00;
-    border: 5px solid #000;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.game-of-the-month {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 40px;
+    background-color: #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(170, 238, 170, 0.3);
+}
+
+.game-of-the-month-title {
+    margin-bottom: 20px;
+}
+
+.game-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-slide {
+    flex: 0 0 auto;
+    margin: 0 20px;
+}
+
+.game-slide img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.game-description {
+    font-family: 'VT323', monospace;
+    font-size: 24px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s, transform 1s;
+}
+
+.game-description.fadeInUp.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.game-review {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    max-height: 300px; /* Änderung: max-height statt height */
+    overflow: hidden; /* Änderung: Entfernen des Scrollbalkens */
+}
+
+.game-review h4 {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px;
+}
+
+.review-text {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+}
+
+.carousel-controls {
+    margin-top: 20px;
+}
+
+.carousel-controls button {
+    background-color: #c4f2c5;
+    color: #222;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-controls button:hover {
+    background-color: #a9e0a9;
 }
 
 .fadeInUp {
@@ -99,14 +225,17 @@ nav a {
     transform: translateY(0);
 }
 
-.delay-2 {
-    transition-delay: 0.2s;
-}
+@media (max-width: 768px) {
+    .about {
+        flex-direction: column;
+    }
 
-.delay-4 {
-    transition-delay: 0.4s;
-}
+    .content,
+    .retro-icon {
+        flex-basis: 100%;
+    }
 
-.delay-6 {
-    transition-delay: 0.6s;
+    .retro-icon {
+        margin-top: 20px;
+    }
 }
