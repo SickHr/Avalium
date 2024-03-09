@@ -1,14 +1,26 @@
-window.addEventListener('scroll', function() {
-    const fadeInUpElements = document.querySelectorAll('.fadeInUp');
-    fadeInUpElements.forEach(function(element) {
-        const elementPosition = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        if (elementPosition < windowHeight - 100) {
-            element.classList.add('visible');
-        } else {
-            element.classList.remove('visible');
-        }
-    });
+window.addEventListener('load', function() {
+    var fadeInUpElements = document.querySelectorAll('.fadeInUp');
+
+    function isElementInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function handleScrollAnimation() {
+        fadeInUpElements.forEach(function(element) {
+            if (isElementInViewport(element)) {
+                element.classList.add('visible');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', handleScrollAnimation);
+    handleScrollAnimation(); // Trigger initial check
 });
 
 // Spiele des Monats Karussell
