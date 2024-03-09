@@ -1,9 +1,8 @@
 <div align="center">
-  <img src="https://via.placeholder.com/800x400.png?text=Avalium+Logo" alt="Avalium Logo" width="400">
   <h1>Avalium</h1>
   <p>Willkommen in der Welt der Indie-Spieleentwicklung</p>
   
-  <a href="https://avalium.com" target="_blank">
+  <a href="https://avalium.me" target="_blank">
     <img src="https://img.shields.io/badge/Website-Visit-brightgreen?style=for-the-badge&logo=firefox" alt="Website">
   </a>
   <a href="https://discord.gg/gpeTksn4vn" target="_blank">
@@ -19,18 +18,16 @@ Avalium ist eine Indie-Spieleentwicklungs-Website, die von einem leidenschaftlic
 
 Hier sind einige der bemerkenswerten Spiele, die auf Avalium entwickelt wurden:
 
-- [Space-Shooter](https://avalium.com/space-shooter) - Ein spannender Weltraum-Shooter, der deinen Reflexe auf die Probe stellt.
 - [Weitere Spiele in Entwicklung...]
 
 ## 🧠 Devlog
 
-Auf dem [Devlog](https://avalium.com/devlog) kannst du den Entwicklungsprozess der Spiele verfolgen. Erhalte Einblicke in die Herausforderungen, Fortschritte und Meilensteine, die während der Entwicklung erreicht wurden.
+Auf dem [Devlog](https://avalium.me/devlog) kannst du den Entwicklungsprozess der Spiele verfolgen. Erhalte Einblicke in die Herausforderungen, Fortschritte und Meilensteine, die während der Entwicklung erreicht wurden.
 
 ## 🤖 Projekte
 
 Neben Spielen arbeitet Avalium auch an anderen spannenden Projekten im Bereich der Spieleentwicklung. Hier sind einige der laufenden Projekte:
 
-- [Spielengine "AvaEngine"](https://avalium.com/avaengine) - Eine leistungsstarke und anpassbare Spielengine für Indie-Entwickler.
 - [Weitere Projekte in Entwicklung...]
 
 ## 🌟 Mitmachen
@@ -41,12 +38,12 @@ Wenn du an den Projekten von Avalium interessiert bist oder einfach nur die Leid
 
 Du kannst Avalium über die folgenden Kanäle kontaktieren:
 
-- [Website](https://avalium.com)
+- [Website](https://avalium.me)
 - [Discord-Server](https://discord.gg/gpeTksn4vn)
-- [E-Mail](mailto:contact@avalium.com)
+- [E-Mail](mailto:contact@avalium.me)
 
 Bleib auf dem Laufenden und verpasse keine Updates oder neue Releases!
 
 <div align="center">
-  <sub>Erstellt mit ❤️ von Avalium</sub>
+  <sub>Erstellt mit ❤️ von Sick</sub>
 </div>
