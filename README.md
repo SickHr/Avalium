@@ -40,7 +40,6 @@ Du kannst Avalium über die folgenden Kanäle kontaktieren:
 
 - [Website](https://avalium.me)
 - [Discord-Server](https://discord.gg/gpeTksn4vn)
-- [E-Mail](mailto:contact@avalium.me)
 
 Bleib auf dem Laufenden und verpasse keine Updates oder neue Releases!
 
