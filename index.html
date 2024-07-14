@@ -1,68 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avalium</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Wie gut ist dein Aim?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2c3e50;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ecf0f1;
+        }
+        #game-container {
+            text-align: center;
+            width: 600px;
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        #game-area {
+            width: 600px;
+            height: 500px;
+            border: 2px solid #ecf0f1;
+            position: relative;
+            background-color: #2c3e50;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        #target {
+            width: 40px;
+            height: 40px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            display: none;
+            transition: all 0.1s ease;
+        }
+        #score, #timer, #combo, #accuracy {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        #start-button, #difficulty-select {
+            margin: 20px auto;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: block;
+            background-color: #3498db;
+            color: #ecf0f1;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #start-button:hover, #difficulty-select:hover {
+            background-color: #2980b9;
+        }
+        h1 {
+            color: #3498db;
+        }
+        #branding {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Avalium</h1>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Games</a></li>
-                    <li><a href="#">Devlog</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <main>
-            <section class="hero">
-                <h2>Welcome to Avalium</h2>
-                <p>Explore the world of coding</p>
-                <div class="particle-effect"></div>
-            </section>
-
-            <section class="about">
-                <div class="content">
-                    <h3>Über mich</h3>
-                    <p>Ich bin ein leidenschaftlicher Indie-Spieleentwickler.</p>
-                    <p>Getrieben von dieser Leidenschaft, erschaffe ich einzigartige Spielkonzepte, die den Spieler auf eine unvergessliche Reise mitnehmen.</p>
-                </div>
-                <div class="retro-icon">
-                    <pre>
-                                   
-                    .----.
-        .---------. | == |
-        |.-"""""-.| |----|
-        ||       || | == |
-        ||       || |----|
-        |'-.....-'| |::::|
-        `"")---(""` |___.|
-        /:::::::::::\" _  "
-        /:::=======:::\`\`\
-        `"""""""""""""`  '-'
-                    </pre>
-                </div>
-            </section>
-
-            <section class="discord-server">
-                <h3>Tritt meinem Discord-Server bei</h3>
-                <img src="discord.png" alt="Discord Logo" class="discord-logo">
-                <a href="https://discord.gg/gpeTksn4vn" target="_blank" class="join-button">Beitreten</a>
-            </section>
-        </main>
-
-        <footer>
-            <p>&copy; Avalium</p>
-        </footer>
+    <div id="game-container">
+        <h1>Wie gut ist dein Aim?</h1>
+        <div id="game-area">
+            <div id="target"></div>
+        </div>
+        <div id="score">Punkte: 0</div>
+        <div id="combo">Combo: x1</div>
+        <div id="accuracy">Genauigkeit: 100%</div>
+        <div id="timer">Zeit: 30s</div>
+        <select id="difficulty-select">
+            <option value="easy">Leicht</option>
+            <option value="medium" selected>Mittel</option>
+            <option value="hard">Schwer</option>
+        </select>
+        <button id="start-button">Spiel starten</button>
+        <div id="branding">Created by !Sick</div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const target = document.getElementById('target');
+        const gameArea = document.getElementById('game-area');
+        const scoreElement = document.getElementById('score');
+        const timerElement = document.getElementById('timer');
+        const comboElement = document.getElementById('combo');
+        const accuracyElement = document.getElementById('accuracy');
+        const startButton = document.getElementById('start-button');
+        const difficultySelect = document.getElementById('difficulty-select');
+
+        let score = 0;
+        let timeLeft = 30;
+        let gameInterval;
+        let moveTimeout;
+        let gameActive = false;
+        let combo = 1;
+        let lastClickTime = 0;
+        let difficulty = 'medium';
+        let totalClicks = 0;
+        let successfulClicks = 0;
+
+        const difficultySettings = {
+            easy: { targetSpeed: 1200 },
+            medium: { targetSpeed: 1140 },  // 5% schneller als einfach
+            hard: { targetSpeed: 960 }      // 20% schneller als einfach
+        };
+
+        function moveTarget() {
+            const maxX = gameArea.clientWidth - target.clientWidth;
+            const maxY = gameArea.clientHeight - target.clientHeight;
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            target.style.left = newX + 'px';
+            target.style.top = newY + 'px';
+
+            const size = Math.floor(Math.random() * 20) + 30;
+            target.style.width = size + 'px';
+            target.style.height = size + 'px';
+
+            const hue = Math.floor(Math.random() * 360);
+            target.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        }
+
+        function updateScore(points) {
+            score += points * combo;
+            scoreElement.textContent = `Punkte: ${score}`;
+        }
+
+        function updateCombo() {
+            const currentTime = new Date().getTime();
+            if (currentTime - lastClickTime < 1000) {
+                combo++;
+            } else {
+                combo = 1;
+            }
+            lastClickTime = currentTime;
+            comboElement.textContent = `Combo: x${combo}`;
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            timerElement.textContent = `Zeit: ${timeLeft}s`;
+            if (timeLeft === 0) {
+                endGame();
+            }
+        }
+
+        function updateAccuracy(isSuccessful) {
+            totalClicks++;
+            if (isSuccessful) {
+                successfulClicks++;
+            }
+            const accuracy = (successfulClicks / totalClicks) * 100;
+            accuracyElement.textContent = `Genauigkeit: ${accuracy.toFixed(1)}%`;
+        }
+
+        function startGame() {
+            if (gameActive) return;
+            gameActive = true;
+            score = 0;
+            combo = 1;
+            totalClicks = 0;
+            successfulClicks = 0;
+            difficulty = difficultySelect.value;
+            timeLeft = 30;
+            scoreElement.textContent = 'Punkte: 0';
+            timerElement.textContent = `Zeit: ${timeLeft}s`;
+            comboElement.textContent = 'Combo: x1';
+            accuracyElement.textContent = 'Genauigkeit: 100%';
+            startButton.style.display = 'none';
+            difficultySelect.style.display = 'none';
+            target.style.display = 'block';
+            moveTarget();
+            gameInterval = setInterval(updateTimer, 1000);
+            scheduleNextMove();
+        }
+
+        function scheduleNextMove() {
+            clearTimeout(moveTimeout);
+            moveTimeout = setTimeout(() => {
+                if (gameActive) {
+                    moveTarget();
+                    scheduleNextMove();
+                }
+            }, difficultySettings[difficulty].targetSpeed);
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            clearTimeout(moveTimeout);
+            gameActive = false;
+            target.style.display = 'none';
+            startButton.style.display = 'block';
+            difficultySelect.style.display = 'block';
+            alert(`Spiel vorbei! Dein Punktestand: ${score}`);
+        }
+
+        target.addEventListener('click', (e) => {
+            if (!gameActive) return;
+            e.stopPropagation();
+            updateScore(1);
+            updateCombo();
+            updateAccuracy(true);
+            moveTarget();
+            clearTimeout(moveTimeout);
+            scheduleNextMove();
+        });
+
+        gameArea.addEventListener('click', () => {
+            if (gameActive) {
+                updateAccuracy(false);
+            }
+        });
+
+        startButton.addEventListener('click', startGame);
+
+        gameArea.addEventListener('selectstart', (e) => e.preventDefault());
+    </script>
 </body>
 </html>
