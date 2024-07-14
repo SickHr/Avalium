@@ -34,8 +34,6 @@
             border-radius: 5px;
         }
         #target {
-            width: 40px;
-            height: 40px;
             background-color: #e74c3c;
             border-radius: 50%;
             position: absolute;
@@ -113,9 +111,9 @@
         let successfulClicks = 0;
 
         const difficultySettings = {
-            easy: { targetSpeed: 1200 },
-            medium: { targetSpeed: 1140 },  // 5% schneller als einfach
-            hard: { targetSpeed: 960 }      // 20% schneller als einfach
+            easy: { targetSpeed: 1800, targetSize: 45 },
+            medium: { targetSpeed: 1500, targetSize: 30 },
+            hard: { targetSpeed: 1000, targetSize: 21 }
         };
 
         function moveTarget() {
@@ -126,7 +124,7 @@
             target.style.left = newX + 'px';
             target.style.top = newY + 'px';
 
-            const size = Math.floor(Math.random() * 20) + 30;
+            const size = difficultySettings[difficulty].targetSize;
             target.style.width = size + 'px';
             target.style.height = size + 'px';
 
@@ -205,7 +203,6 @@
             target.style.display = 'none';
             startButton.style.display = 'block';
             difficultySelect.style.display = 'block';
-            alert(`Spiel vorbei! Dein Punktestand: ${score}`);
         }
 
         target.addEventListener('click', (e) => {
